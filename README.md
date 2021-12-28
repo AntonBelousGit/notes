@@ -17,7 +17,7 @@
 
 ### @each
 
-#### add partial files
+ Add partial files
 
 #### empty-posts.blade.php
     <p>Nothing found</p>
