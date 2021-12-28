@@ -1,4 +1,4 @@
-###1. Optimization blade @foreach
+### 1. Optimization blade @foreach
     @if($posts->count())
         @foreach($posts as $item)
             {{$item->name}}
@@ -17,15 +17,11 @@
 
 ### @each
 
-####add partial files
+#### add partial files
 
 #### empty-posts.blade.php
-
     <p>Nothing found</p>
-
 #### post.blade.php
-
     <p>{{$post->name}}</p>
-
 #### @each
     @each('partial.post',$posts,'post','partial.empty-posts')
