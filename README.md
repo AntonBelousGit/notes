@@ -34,3 +34,39 @@ Maybe in Laravel 9 it will be added to the config
     {
         Model::preventLazyLoading(!app()->isProduction());
     }
+
+### 3. Eloquent withCount(): Get Related Records Amount
+
+    public function posts()
+    {
+    return $this->hasMany(Post::class);
+    }
+    
+    public function comments()
+    {
+    return $this->hasManyThrough(Comment::class, Post::class);
+    }
+
+    public function index()
+    {
+    $users = User::withCount(['posts', 'comments'])->get();
+    return view('users', compact('users'));
+    }
+
+Every parameter that is specified in withCount() method, becomes main object’s _count property. So in this case, we will have $user->posts_count and $user->comments_count variables.
+
+Notice, that withCount() works with both hasMany() relationship, and also 2nd level deep with hasManyThrough().
+
+Another example is that we can even filter the query with withCount() relationship. Let’s say that our comments table has a column approved, and then we can filter that separately and even assign an alias to that column name:
+
+    $users = User::withCount([
+    'posts',
+    'comments',
+    'comments as approved_comments_count' => function ($query) {
+    $query->where('approved', 1);
+    }])
+    ->get();
+
+And then we receive $user->approved_comments_count that we can use in Blade.
+
+<a href="https://laravel.com/docs/8.x/eloquent-relationships#counting-related-models">Linc off.doc</a>
